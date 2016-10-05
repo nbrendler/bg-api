@@ -11,15 +11,16 @@ Download and install [Stack](https://docs.haskellstack.org/en/stable/README/#how
 Stack should take care of installing other Haskell-related dependencies including the GHC compiler.
 
 Once Stack is installed, `cd` to the project directory and run
-
+```
   stack build
-
+```
 which should download/configure/build all of the necessary dependencies. The first build will likely take a while.
 
 Once built successfully, run the server locally with
-
+```
   stack exec bg-api-exe
-
+```
 It will be served at `http://localhost:8080`. To query it
-
+```
   curl http://localhost:8080/games
+```

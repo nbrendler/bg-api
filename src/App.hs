@@ -18,42 +18,30 @@ import Api
 import Models
 
 startApp :: IO ()
-startApp = run 8080 =<< mkApp
+startApp = mkApp >>= run 8080
 
 app :: PG.Connection -> Application
 app conn = serve api $ server conn
 
 server :: PG.Connection -> Server API
 server conn =
-        userListHandler
-  :<|>  gameListHandler
-  :<|>  genreListHandler
-  :<|>  sessionListHandler
-        where
-          userListHandler = liftIO $ userList
-          gameListHandler = liftIO $ gameList
-          genreListHandler = liftIO $ genreList
-          sessionListHandler = liftIO $ sessionList
-
-          userList :: IO ([User])
-          userList = do
-            result :: [User] <- PG.query_ conn "SELECT * FROM users"
-            return result
-
-          gameList :: IO ([Game])
-          gameList = do
-            result :: [Game] <- PG.query_ conn "SELECT * FROM games"
-            return result
-
-          genreList :: IO ([Genre])
-          genreList = do
-            result :: [Genre] <- PG.query_ conn "SELECT * FROM genres"
-            return result
-
-          sessionList :: IO ([Session])
-          sessionList = do
-            result :: [Session] <- PG.query_ conn "SELECT * FROM sessions"
-            return result
+        userList
+  :<|>  userFetch
+  :<|>  gameList
+  :<|>  gameFetch
+  :<|>  genreList
+  :<|>  genreFetch
+  :<|>  sessionList
+  :<|>  sessionFetch
+  where
+    userList = liftIO $ fetchCollection conn
+    userFetch id = liftIO $ fetchSingle conn id
+    gameList = liftIO $ fetchCollection conn
+    gameFetch id = liftIO $ fetchSingle conn id
+    genreList = liftIO $ fetchCollection conn
+    genreFetch id = liftIO $ fetchSingle conn id
+    sessionList = liftIO $ fetchCollection conn
+    sessionFetch id = liftIO $ fetchSingle conn id
 
 mkApp :: IO Application
 mkApp = do

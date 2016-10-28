@@ -50,14 +50,14 @@ data Game = Game
   } deriving (Eq, Show)
 
 instance ToJSON Game where
-  toJSON (Game id desc min max name pub) =
+  toJSON (Game id name desc min max pub) =
     object
     [ "id"          .= id
     , "name"        .= name
-    , "publisher"   .= pub
     , "description" .= desc
     , "minPlayers"  .= min
     , "maxPlayers"  .= max
+    , "publisher"   .= pub
     ]
 
 instance FromRow Game where

@@ -11,6 +11,7 @@ import Control.Monad.IO.Class (liftIO)
 
 import Network.Wai
 import Network.Wai.Handler.Warp
+import Network.Wai.Middleware.Cors
 import Servant
 import qualified Database.PostgreSQL.Simple as PG
 
@@ -46,4 +47,4 @@ server conn =
 mkApp :: IO Application
 mkApp = do
     conn <- PG.connect PG.defaultConnectInfo { PG.connectDatabase="bg" }
-    return $ app conn
+    return $ simpleCors $ app conn

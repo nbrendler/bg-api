@@ -17,10 +17,3 @@ INSERT INTO game_genre (gameId, genreId) VALUES
 (1,2),
 (2,1),
 (2,2);
-
-TRUNCATE TABLE users CASCADE;
-INSERT INTO users (id, name) VALUES
-(1, 'nik'),
-(2, 'amie')
-ON CONFLICT DO NOTHING;
-COMMIT;

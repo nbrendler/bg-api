@@ -25,6 +25,7 @@ library
                      , servant
                      , text
                      , wai
+                     , wai-cors
                      , warp
   default-language:    Haskell2010
 
